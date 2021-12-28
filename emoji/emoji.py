@@ -1,4 +1,5 @@
 
+
 import discord
 import os
 from discord.ext import commands
@@ -12,8 +13,9 @@ import requests
 class EmojiPlugin(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-    @commands.command(name="emojiadd",aliases=["addemo","emoadd"], help="Adds an emoji to the server.Emoji url can be .jpg/.png/.gif")
-    async def addemoji(self, ctx, url: str, *, name,emoji=discord.Emoji):
+    @commands.command(aliases=["addemo","emoadd","emojiadd"], help="Adds an emoji to the server.Emoji url can be .jpg/.png/.gif")
+    @commands.has_permissions(manage_emojis=True)
+    async def addemoji(self, ctx, url: str, *, name,emoji:discord.Emoji):
             guild = ctx.guild
             if ctx.author.guild_permissions.manage_emojis:
                 async with aiohttp.ClientSession() as ses:
@@ -52,6 +54,7 @@ class EmojiPlugin(commands.Cog):
     @commands.command(
         alisas=["remove","delemoji"], help="Removes the specified emoji from the server."
     )
+    @commands.has_permissions(manage_emojis=True)    
     async def emojiremove(self, ctx, emoji: discord.Emoji):
         guild = ctx.guild
         if ctx.author.guild_permissions.manage_emojis:
@@ -64,6 +67,7 @@ class EmojiPlugin(commands.Cog):
 
 
     @commands.command(name="steal", help="Steals an emoji form a server")
+    @commands.has_permissions(manage_emojis=True)    
     async def steal(self, ctx, emoji: discord.PartialEmoji, *, emojiname=None):
 
         if ctx.author.guild_permissions.manage_emojis:
