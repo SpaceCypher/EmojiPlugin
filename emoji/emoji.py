@@ -15,7 +15,7 @@ class EmojiPlugin(commands.Cog):
         self.bot = bot
     @commands.command(aliases=["addemo","emoadd","emojiadd"], help="Adds an emoji to the server.Emoji url can be .jpg/.png/.gif")
     @commands.has_permissions(manage_emojis=True)
-    async def addemoji(self, ctx, url: str, *, name,emoji:discord.Emoji):
+    async def addemoji(self, ctx, url: str, *, name,emoji=discord.Emoji):
             guild = ctx.guild
             if ctx.author.guild_permissions.manage_emojis:
                 async with aiohttp.ClientSession() as ses:
