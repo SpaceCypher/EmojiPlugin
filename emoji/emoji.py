@@ -66,7 +66,7 @@ class EmojiPlugin(commands.Cog):
             await emoji.delete()
 
 
-    @commands.command(name="steal", help="Steals an emoji form a server")
+    @commands.command(name="steal", help="Steals an emoji from a server")
     @commands.has_permissions(manage_emojis=True)    
     async def steal(self, ctx, emoji: discord.PartialEmoji, *, emojiname=None):
 
