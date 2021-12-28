@@ -24,6 +24,6 @@ Get command info
 <prefix>help EmojiPlugin
 ```
 
-## Something Broke.. DM me at SpaceBar#0101 on discord rightaway
+## Something Broke..? DM me at SpaceBar#0101 on discord rightaway
 
 
