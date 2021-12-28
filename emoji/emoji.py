@@ -12,7 +12,7 @@ import requests
 class EmojiPlugin(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-    @commands.command(name="emojiadd",aliases=["addemo","emoadd"], description="Adds an emoji to the server.")
+    @commands.command(name="emojiadd",aliases=["addemo","emoadd"], help="Adds an emoji to the server.Emoji url can be .jpg/.png/.gif")
     async def addemoji(self, ctx, url: str, *, name,emoji=discord.Emoji):
             guild = ctx.guild
             if ctx.author.guild_permissions.manage_emojis:
@@ -50,7 +50,7 @@ class EmojiPlugin(commands.Cog):
                             await ctx.send(embed=em)
 
     @commands.command(
-        alisas=["remove","delemoji"], description="Removes the specified emoji from the server."
+        alisas=["remove","delemoji"], help="Removes the specified emoji from the server."
     )
     async def emojiremove(self, ctx, emoji: discord.Emoji):
         guild = ctx.guild
@@ -63,32 +63,32 @@ class EmojiPlugin(commands.Cog):
             await emoji.delete()
 
 
-    @commands.command(name="steal", description="Steals an emoji form a server")
-    async def steal(self, ctx, emoji: discord.PartialEmoji, *, text=None):
+    @commands.command(name="steal", help="Steals an emoji form a server")
+    async def steal(self, ctx, emoji: discord.PartialEmoji, *, emojiname=None):
 
         if ctx.author.guild_permissions.manage_emojis:
 
-            if text == None:
-                text = emoji.name
+            if emojiname == None:
+                emojiname = emoji.name
             else:
-                text = text.replace(" ", "_")
+                text = emojiname.replace(" ", "_")
 
             r = requests.get(emoji.url, allow_redirects=True)
 
             if emoji.animated == True:
                 open("emoji.gif", "wb").write(r.content)
                 with open("emoji.gif", "rb") as f:
-                    z = await ctx.guild.create_custom_emoji(name=text, image=f.read())
+                    z = await ctx.guild.create_custom_emoji(name=emojiname, image=f.read())
                 os.remove("emoji.gif")
 
             else:
                 open("emoji.png", "wb").write(r.content)
                 with open("emoji.png", "rb") as f:
-                    z = await ctx.guild.create_custom_emoji(name=text, image=f.read())
+                    z = await ctx.guild.create_custom_emoji(name=emojiname, image=f.read())
                 os.remove("emoji.png")
 
             embed = discord.Embed(
-                description=f"""Succesfully Stolen {z} as "{text}" """,
+                description=f"""Succesfully Stolen {z} as "{emojiname}" """,
                 color=discord.Color.green(),
             )
             await ctx.send(embed=embed)
